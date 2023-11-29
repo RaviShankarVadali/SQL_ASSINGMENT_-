@@ -1,1 +1,162 @@
+CREATE DATABASE SQL_ASSIGNMENT_1
 
+USE SQL_ASSIGNMENT_1
+
+
+--Salesman table creation
+
+CREATE TABLE Salesman (
+    SalesmanId INT,
+    Name VARCHAR(255),
+    Commission DECIMAL(10, 2),
+    City VARCHAR(255),
+    Age INT
+);
+
+--Salesman table record insertion 
+
+INSERT INTO Salesman (SalesmanId, Name, Commission, City, Age)
+	VALUES
+		(101, 'Joe', 50, 'California', 17),
+		(102, 'Simon', 75, 'Texas', 25),
+		(103, 'Jessie', 105, 'Florida', 35),
+		(104, 'Danny', 100, 'Texas', 22),
+		(105, 'Lia', 65, 'New Jersey', 30);
+
+
+drop table Customer
+
+--Customer table creation
+
+CREATE TABLE Customer (
+    SalesmanId INT,
+    CustomerId INT,
+    CustomerName VARCHAR(255),
+    PurchaseAmount INT,
+    );
+
+--Customer table record insertion 
+
+INSERT INTO Customer
+VALUES
+    (101, 2345, 'Andrew', 550),
+    (103, 1575, 'Lucky', 4500),
+    (104, 2345, 'Andrew', 4000),
+    (107, 3747, 'Remona', 2700),
+    (110, 4004, 'Julia', 4545);
+
+
+--Orders table Creation
+
+CREATE TABLE Orders (OrderId int, CustomerId int, SalesmanId int, Orderdate Date, Amount money)
+
+--Orders table record insertion 
+
+INSERT INTO Orders Values 
+(5001,2345,101,'2021-07-01',550),
+(5003,1234,105,'2022-02-15',1500)
+
+
+
+
+
+--Tasks to be Performed:
+--1. Insert a new record in your Orders table.
+
+INSERT INTO ORDERS VALUES
+(5002 , 3456 , 104 , '2023-02-15' , 1500 )
+
+
+
+
+--2. Add Primary key constraint for SalesmanId column in Salesman table. Add default
+--constraint for City column in Salesman table. Add Foreign key constraint for SalesmanId
+--column in Customer table. Add not null constraint in Customer_name column for the
+--Customer table.
+
+
+--Add Primary key constraint for SalesmanId column in Salesman table.
+ALTER TABLE SALESMAN
+ALTER COLUMN SALESMANID INT NOT NULL
+
+ALTER TABLE SALESMAN
+ADD CONSTRAINT PK_salesmanid primary key (salesmanid)
+
+
+
+
+-- Add default constraint for City column in Salesman table.
+
+ALTER TABLE SALESMAN
+ADD CONSTRAINT df_City
+DEFAULT 'Texas' FOR City;
+
+
+
+-- Add Foreign key constraint for SalesmanId column in Customer table.
+
+ALTER TABLE orders
+ALTER COLUMN SALESMANID INT NOT NULL
+
+ALTER TABLE orders
+ADD CONSTRAINT PK_orders_salesmanid primary key (salesmanid)
+
+ALTER TABLE SALESMAN
+ADD constraint fk_salesmanid foreign key (salesmanid) references orders(salesmanid)
+
+
+
+
+
+-- Add not null constraint in Customer_name column for the Customer table.
+
+
+ALTER TABLE CUSTOMER
+ALTER COLUMN customername varchar(255) NOT NULL
+
+
+
+--3. Fetch the data where the Customer’s name is ending with either ‘N’ also get the
+--purchase amount value greater than 500.
+
+Select customername , purchaseamount from customer where customername like '%N' or purchaseamount > 500
+
+
+
+--4. Using SET operators, retrieve the first result with unique SalesmanId values from two
+--tables, and the other result containing SalesmanId without duplicates from two tables.
+
+
+
+select salesmanid from salesman except select salesmanid from customer
+
+select salesmanid from salesman except select salesmanid from orders
+
+
+
+
+select salesmanid from salesman union select salesmanid from customer
+
+select salesmanid from salesman union select salesmanid from orders
+
+
+
+
+--5. Display the below columns which has the matching data.
+--Orderdate, Salesman Name, Customer Name, Commission, and City which has the
+--range of Purchase Amount between 1500 to 3000.
+
+
+select Orderdate, Name, CustomerName, Commission, City 
+from salesman inner join customer on salesman.salesmanid = customer.salesmanid
+inner join orders on salesman.salesmanid = orders.salesmanid
+where purchaseamount between 1500 and 3000
+
+
+
+--6. Using right join fetch all the results from Salesman and Orders table.
+
+select * from salesman 
+right join orders 
+on 
+salesman.salesmanid = orders.salesmanid
