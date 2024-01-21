@@ -1,0 +1,455 @@
+                                               ASSIGNMENT NO.1 
+                                           ORACLE SQL SESSION
+
+
+1.	TOTAL NO. OF EMPLOYEES
+>>>select sum(empno) total_employees 
+from emp;
+
+TOTAL_EMPLOYEES
+108172
+
+
+
+2.	TOTAL NO. OF DEPARTMENT
+>>>select sum(deptno) total_departments
+from emp;
+
+TOTAL_DEPARTMENTS
+310
+
+3.	ALL THE EMPLOYEES
+>>>select count(*) total_employees_count
+from emp;
+
+  or
+>>>select count(empno) total_employees_count
+from emp;
+
+TOTAL_EMPLOYEES_COUNT
+14
+
+4.	ALL THE DEPARTMENT
+>>>select count(deptno) total_deptno_count
+from emp;
+TOTAL_DEPTNO_COUNT :14
+
+
+5.	TOTAL SALARY PAID FOR ALL THE EMPLOYEES
+>>>select sum(sal) total_salary_employees
+from emp;
+
+TOTAL_SALARY_EMPLOYEES
+29025
+
+
+6.	TOTAL COMMISSION PAID TO ALL EMPLOYEES
+>>>select sum(comm) total_commission
+from emp;
+
+TOTAL_COMMISSION
+2200
+
+7.	WHICH JOB TITLE OF THE EMPLOYEES GET COMMISSION PAID
+>>>select comm, job
+from emp;
+COMM	JOB
+- 	PRESIDENT
+0	SALESMAN
+- 	MANAGER
+500	SALESMAN
+- 	CLERK
+- 	MANAGER
+- 	MANAGER
+- 	ANALYST
+- 	ANALYST
+- 	CLERK
+300	SALESMAN
+1400	SALESMAN
+- 	CLERK
+- 	CLERK
+
+
+8.	SYSTEM DATE
+SYSDATE
+21-JAN-24
+>>>select sysdate
+from dual;
+
+
+9.	AVERAGE SALARY PAID TO ALL EMPLOYEES
+>>select avg(sal) as average_salary
+from emp;
+AVERAGE_SALARY
+2073.214285714285714285714285714285714286
+
+
+
+
+
+10.	HOW MANY EMPLOYEES IN EACH DEPARTMENT
+>>>select deptno, count(empno)
+from emp
+group by deptno
+order by 1;
+
+DEPTNO	COUNT(EMPNO)
+10	3
+20	5
+30	6
+
+11.	TOTAL SALARY OF THE EMPLOYEES IN EACH DEPARTMENT
+>>>select deptno, sum(sal)
+from emp
+group by deptno
+DEPTNO	SUM(SAL)
+10	8750
+20	10875
+30	9400
+order by 1;
+
+12.	HOW MANY EMPLOYEES ARE THERE UNDER EACH JOB TITLE
+>>>select deptno, count(empno)
+from emp
+group by deptno
+order by 1;
+
+DEPTNO	COUNT(EMPNO)
+10	3
+20	5
+30	6
+
+
+13.	AVERAGE SALARY PAID FOR EACH JOB TITLE
+
+>>>select deptno, (avg(sal))
+from emp
+group by deptno
+order by 1;
+
+DEPTNO	(AVG(SAL))
+10	2916.666666666666666666666666666666666667
+20	2175
+30	1566.666666666666666666666666666666666667
+
+
+14.	HIRE DAY, MONTH AND YEAR FOR EACH EMPLOYEES
+>>>select to_char(hiredate), count(empno)
+from emp
+group by to_char(hiredate)
+order by 1;
+
+O_CHAR(HIREDATE)	COUNT(EMPNO)
+01-MAY-81	1
+02-APR-81	1
+03-DEC-81	2
+08-SEP-81	1
+09-JUN-81	1
+17-DEC-80	1
+17-NOV-81	1
+19-APR-87	1
+20-FEB-81	1
+22-FEB-81	1
+23-JAN-82	1
+23-MAY-87	1
+28-SEP-81	1
+
+15.	SORT EMPLOYEES DEPARTMENT WISE
+>>>select count(empno), deptno
+from emp
+group by deptno
+order by 1;
+
+COUNT(EMPNO)	DEPTNO
+3	10
+5	20
+6	30
+
+
+
+
+16.	SORT THE EMPLOYEES BASED ON THEIR JOB TITLE
+>>>select deptno,job,count(empno), sum(sal)
+from emp
+group by deptno, job
+order by 1;
+
+
+DEPTNO	JOB	ENAME
+10	CLERK	MILLER
+10	MANAGER	CLARK
+10	PRESIDENT	KING
+20	ANALYST	FORD
+20	ANALYST	SCOTT
+20	CLERK	ADAMS
+20	CLERK	SMITH
+20	MANAGER	JONES
+30	CLERK	JAMES
+30	MANAGER	BLAKE
+30	SALESMAN	ALLEN
+30	SALESMAN	MARTIN
+30	SALESMAN	TURNER
+30	SALESMAN	WARD
+
+
+17.	SORT THE EMPLOYEES BASED ON DESCENDING ORDER OF THEIR SALARIES
+>>>select empno ,job , sal
+ from emp
+order by sal desc;
+
+EMPNO	JOB	SAL
+7839	PRESIDENT	5000
+7902	ANALYST	3000
+7788	ANALYST	3000
+7566	MANAGER	2975
+7698	MANAGER	2850
+7782	MANAGER	2450
+7499	SALESMAN	1600
+7844	SALESMAN	1500
+7934	CLERK	1300
+7521	SALESMAN	1250
+7654	SALESMAN	1250
+7876	CLERK	1100
+7900	CLERK	950
+7369	CLERK	800
+                   	
+	
+	
+18.	SORT THE EMPLOYEES ASCENDING ORDER OF THEIR DEPT AND DESC ORDER OF THEIR SAL
+>>>select empno, deptno,sal
+from emp
+order by  deptno , sal desc;
+
+
+
+EMPNO	DEPTNO	SAL
+7839	10	5000
+7782	10	2450
+7934	10	1300
+7902	20	3000
+7788	20	3000
+7566	20	2975
+7876	20	1100
+7369	20	800
+7698	30	2850
+7499	30	1600
+7844	30	1500
+7521	30	1250
+7654	30	1250
+7900	30	950
+
+
+19.	HOW MANY EMPLOYEES HAVE THEIR NAME WITH 6 CHARACTER
+>>>select empno, ename,count(char(ename))
+from emp
+    group by empno, ename;
+
+
+20.	EMPLOYEE WHO JOIN LATEST
+>>>select to_char(hiredate), empno, deptno
+from emp
+order by  hiredate desc;
+
+TO_CHAR(HIREDATE)	EMPNO	DEPTNO
+23-MAY-87	7876	20
+19-APR-87	7788	20
+23-JAN-82	7934	10
+03-DEC-81	7900	30
+03-DEC-81	7902	20
+17-NOV-81	7839	10
+28-SEP-81	7654	30
+08-SEP-81	7844	30
+09-JUN-81	7782	10
+01-MAY-81	7698	30
+02-APR-81	7566	20
+22-FEB-81	7521	30
+20-FEB-81	7499	30
+17-DEC-80	7369	20
+
+
+
+21.	MAX AND MIN SALARY PAID
+
+>>>select  empno, max(sal), min(sal)
+from emp
+    group by empno;
+
+EMPNO	MAX(SAL)	MIN(SAL)
+7839	5000	5000
+7844	1500	1500
+7782	2450	2450
+7521	1250	1250
+7876	1100	1100
+7698	2850	2850
+7566	2975	2975
+7788	3000	3000
+7902	3000	3000
+7369	800	800
+7499	1600	1600
+7654	1250	1250
+7900	950	950
+7934	1300	1300
+
+22.	SORT THE EMPLOYEES INTO THEIR HIRE DATE
+>>>select empno, deptno, to_char (hiredate,'yyyy')
+    from emp;
+
+EMPNO	DEPTNO	TO_CHAR(HIREDATE,'YYYY')
+7839	10	1981
+7844	30	1981
+7782	10	1981
+7521	30	1981
+7876	20	1987
+7698	30	1981
+7566	20	1981
+7788	20	1987
+7902	20	1981
+7369	20	1980
+7499	30	1981
+7654	30	1981
+7900	30	1981
+7934	10	1982
+
+23.	EMP WHO JOIN LATEST
+>>>select to_char(hiredate), empno, deptno
+from emp
+order by  hiredate desc;
+
+TO_CHAR(HIREDATE)	EMPNO	DEPTNO
+23-MAY-87	7876	20
+19-APR-87	7788	20
+23-JAN-82	7934	10
+03-DEC-81	7900	30
+03-DEC-81	7902	20
+17-NOV-81	7839	10
+28-SEP-81	7654	30
+08-SEP-81	7844	30
+09-JUN-81	7782	10
+01-MAY-81	7698	30
+02-APR-81	7566	20
+22-FEB-81	7521	30
+20-FEB-81	7499	30
+17-DEC-80	7369	20
+
+
+
+
+24.	WHO IS OIDEST EMP
+>>>select empno, deptno, to_char (hiredate)
+    from emp
+order by hiredate;
+
+EMPNO	DEPTNO	TO_CHAR(HIREDATE)
+7369	20	17-DEC-80
+7499	30	20-FEB-81
+7521	30	22-FEB-81
+7566	20	02-APR-81
+7698	30	01-MAY-81
+7782	10	09-JUN-81
+7844	30	08-SEP-81
+7654	30	28-SEP-81
+7839	10	17-NOV-81
+7902	20	03-DEC-81
+7900	30	03-DEC-81
+7934	10	23-JAN-82
+7788	20	19-APR-87
+7876	20	23-MAY-87
+
+
+25.	SORT EMP BASED ON HIRE DATE (DESC) AND DEPTNO (ASCE)
+>>> select empno, deptno, to_char (hiredate)
+    from emp
+order by hiredate desc, deptno;
+
+EMPNO	DEPTNO	TO_CHAR(HIREDATE)
+7876	20	23-MAY-87
+7788	20	19-APR-87
+7934	10	23-JAN-82
+7902	20	03-DEC-81
+7900	30	03-DEC-81
+7839	10	17-NOV-81
+7654	30	28-SEP-81
+7844	30	08-SEP-81
+7782	10	09-JUN-81
+7698	30	01-MAY-81
+7566	20	02-APR-81
+7521	30	22-FEB-81
+7499	30	20-FEB-81
+7369	20	17-DEC-80
+
+
+26.	EMP WHO GET SALARY GREATER THAN OR EQUAL TO AVG SAL OF EMP
+>>> select deptno,avg(sal), sum(sal)
+from emp
+group by deptno, job
+    having sum(sal)>=avg(sal);
+
+DEPTNO	AVG(SAL)	SUM(SAL)
+20	2975	2975
+10	5000	5000
+20	3000	6000
+10	1300	1300
+30	1400	5600
+10	2450	2450
+20	950	1900
+30	2850	2850
+30	950	950
+
+
+27.	EMP SAL<=AVG SAL
+>>> select deptno,avg(sal), sum(sal)
+from emp
+group by deptno, job
+    having sum(sal)<=avg(sal);
+
+EPTNO	AVG(SAL)	SUM(SAL)
+20	2975	2975
+10	5000	5000
+10	1300	1300
+10	2450	2450
+30	2850	2850
+30	950	950
+
+
+28.	EMP SAL BETWEEN 2000 AND 4000
+>>> select empno, ename, job, sal, deptno
+from emp
+where sal between 2000 and 4000;
+
+EMPNO	ENAME	JOB	SAL	DEPTNO
+7782	CLARK	MANAGER	2450	10
+7698	BLAKE	MANAGER	2850	30
+7566	JONES	MANAGER	2975	20
+7788	SCOTT	ANALYST	3000	20
+7902	FORD	ANALYST	3000	20
+
+29.	WHICH EMP GET HIGHEST AND LOWEST SAL
+>>> select empno, ename, job, sal, deptno
+from emp
+    
+where sal between min(sal) and max(sal) ;
+
+
+30.	GIFT BUY FOR NEXT MONTH
+>>> select empno, deptno, to_char (hiredate,'MM'), count(to_char(hiredate,'MM'))
+    from emp
+    group by empno, deptno, hiredate
+    order by hiredate ;
+
+
+EMPNO	DEPTNO	TO_CHAR(HIREDATE,'MM')	COUNT(TO_CHAR(HIREDATE,'MM'))
+7369	20	12	1
+7499	30	02	1
+7521	30	02	1
+7566	20	04	1
+7698	30	05	1
+7782	10	06	1
+7844	30	09	1
+7654	30	09	1
+7839	10	11	1
+7902	20	12	1
+7900	30	12	1
+7934	10	01	1
+7788	20	04	1
+7876	20	05	1
+
